@@ -77,5 +77,5 @@ export function removeCookie(name: string): void {
 }
 
 export function isMockDevEnabled(): boolean {
-  return import.meta.env.DEV && Boolean(Number(import.meta.env.VITE_MOCK_ENABLED));
+  return process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_MOCK_ENABLED === '1';
 }

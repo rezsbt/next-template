@@ -7,12 +7,12 @@ declare module 'axios' {
     /** When true, 401 is rejected without attempting token refresh. */
     skipRefresh?: boolean;
     /**
-     * Dev + MSW only (`import.meta.env.DEV` and `VITE_MOCK_ENABLED=1`).
+     * Dev + MSW only (`NODE_ENV=development` and `NEXT_PUBLIC_MOCK_ENABLED=1`).
      * When true, sends `x-mock-fail: 1` so mock handlers return a failed envelope.
      */
     mockFail?: boolean;
     /**
-     * Dev + MSW only (`import.meta.env.DEV` and `VITE_MOCK_ENABLED=1`).
+     * Dev + MSW only (`NODE_ENV=development` and `NEXT_PUBLIC_MOCK_ENABLED=1`).
      * Merged into request query params for mock handlers (e.g. `{ nextStep: 'register' }`).
      */
     mockParams?: Record<string, string | number | boolean | null | undefined>;
