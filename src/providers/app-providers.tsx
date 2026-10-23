@@ -8,10 +8,16 @@ import { CounterStoreProvider } from './counter-store-provider';
 import { MSWProvider } from './msw-provider';
 import { QueryProvider } from './query-provider';
 
-export function AppProviders({ children }: { children: ReactNode }) {
+export function AppProviders({
+  children,
+  direction,
+}: {
+  children: ReactNode;
+  direction: 'ltr' | 'rtl';
+}) {
   return (
     <MSWProvider>
-      <DirectionProvider direction="rtl">
+      <DirectionProvider direction={direction}>
         <QueryProvider>
           <CounterStoreProvider>{children}</CounterStoreProvider>
         </QueryProvider>

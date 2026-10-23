@@ -1,0 +1,24 @@
+{
+  "HomePage": {
+    "greeting": "سلام",
+    "usersLink": "مشاهده کاربران"
+  },
+  "UsersPage": {
+    "title": "کاربران",
+    "description": "لیست کاربران با صفحه‌بندی"
+  },
+  "UsersView": {
+    "loading": "در حال بارگذاری کاربران…",
+    "error": "خطا در دریافت کاربران",
+    "retry": "تلاش دوباره",
+    "summary": "{total} کاربر · صفحه {currentPage} از {totalPages}",
+    "updating": " · در حال به‌روزرسانی…",
+    "name": "نام",
+    "email": "ایمیل",
+    "id": "شناسه",
+    "empty": "کاربری یافت نشد",
+    "previous": "قبلی",
+    "next": "بعدی",
+    "backHome": "بازگشت به خانه"
+  }
+}

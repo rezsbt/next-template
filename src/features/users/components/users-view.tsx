@@ -1,10 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 import { use } from 'react';
 
 import { getUsers } from '@/features/users/api/get-users';
+import { getPathname, Link } from '@/i18n/navigation';
 import { Button } from '@/shared/shadcn/components/ui/button';
 import {
   Pagination,
@@ -37,10 +38,6 @@ function parsePage(value: string | undefined): number {
   return Math.floor(parsed);
 }
 
-function buildPageHref(page: number): string {
-  return page <= 1 ? '/users' : `/users?page=${page}`;
-}
-
 function getVisiblePages(current: number, total: number): (number | 'ellipsis')[] {
   if (total <= 7) {
     return Array.from({ length: total }, (_, i) => i + 1);
@@ -66,6 +63,13 @@ function getVisiblePages(current: number, total: number): (number | 'ellipsis')[
 export function UsersView({ searchParams }: UsersViewProps) {
   const params = use(searchParams);
   const page = parsePage(params.page);
+  const locale = useLocale();
+  const t = useTranslations('UsersView');
+
+  const buildPageHref = (targetPage: number): string => {
+    const pathname = getPathname({ locale, href: '/users' });
+    return targetPage <= 1 ? pathname : `${pathname}?page=${targetPage}`;
+  };
 
   const { data, isPending, isError, error, refetch, isFetching } = useQuery({
     queryKey: ['users', page, PAGE_SIZE],
@@ -76,7 +80,7 @@ export function UsersView({ searchParams }: UsersViewProps) {
     return (
       <div className="flex items-center justify-center gap-2 py-16 text-muted-foreground">
         <Spinner className="size-5" />
-        <span>در حال بارگذاری کاربران…</span>
+        <span>{t('loading')}</span>
       </div>
     );
   }
@@ -85,10 +89,10 @@ export function UsersView({ searchParams }: UsersViewProps) {
     return (
       <div className="flex flex-col items-center gap-3 py-16 text-center">
         <p className="text-destructive">
-          {error instanceof Error ? error.message : 'خطا در دریافت کاربران'}
+          {error instanceof Error ? error.message : t('error')}
         </p>
         <Button type="button" variant="outline" onClick={() => void refetch()}>
-          تلاش دوباره
+          {t('retry')}
         </Button>
       </div>
     );
@@ -101,24 +105,24 @@ export function UsersView({ searchParams }: UsersViewProps) {
     <div className="flex flex-col gap-6">
       <div className="flex items-baseline justify-between gap-4">
         <p className="text-sm text-muted-foreground">
-          {total} کاربر · صفحه {currentPage} از {totalPages}
-          {isFetching ? ' · در حال به‌روزرسانی…' : null}
+          {t('summary', { total, currentPage, totalPages })}
+          {isFetching ? t('updating') : null}
         </p>
       </div>
 
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>نام</TableHead>
-            <TableHead>ایمیل</TableHead>
-            <TableHead className="w-[120px]">شناسه</TableHead>
+            <TableHead>{t('name')}</TableHead>
+            <TableHead>{t('email')}</TableHead>
+            <TableHead className="w-[120px]">{t('id')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {items.length === 0 ? (
             <TableRow>
               <TableCell colSpan={3} className="py-10 text-center text-muted-foreground">
-                کاربری یافت نشد
+                {t('empty')}
               </TableCell>
             </TableRow>
           ) : (
@@ -141,7 +145,7 @@ export function UsersView({ searchParams }: UsersViewProps) {
             <PaginationItem>
               <PaginationPrevious
                 href={buildPageHref(Math.max(1, currentPage - 1))}
-                text="قبلی"
+                text={t('previous')}
                 aria-disabled={currentPage <= 1}
                 className={currentPage <= 1 ? 'pointer-events-none opacity-50' : undefined}
               />
@@ -164,7 +168,7 @@ export function UsersView({ searchParams }: UsersViewProps) {
             <PaginationItem>
               <PaginationNext
                 href={buildPageHref(Math.min(totalPages, currentPage + 1))}
-                text="بعدی"
+                text={t('next')}
                 aria-disabled={currentPage >= totalPages}
                 className={
                   currentPage >= totalPages ? 'pointer-events-none opacity-50' : undefined
@@ -177,7 +181,7 @@ export function UsersView({ searchParams }: UsersViewProps) {
 
       <p className="text-center text-sm text-muted-foreground">
         <Link href="/" className="underline-offset-4 hover:underline">
-          بازگشت به خانه
+          {t('backHome')}
         </Link>
       </p>
     </div>

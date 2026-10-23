@@ -1,0 +1,24 @@
+{
+  "HomePage": {
+    "greeting": "Hello",
+    "usersLink": "View users"
+  },
+  "UsersPage": {
+    "title": "Users",
+    "description": "Paginated list of users"
+  },
+  "UsersView": {
+    "loading": "Loading users…",
+    "error": "Failed to load users",
+    "retry": "Try again",
+    "summary": "{total} users · page {currentPage} of {totalPages}",
+    "updating": " · Updating…",
+    "name": "Name",
+    "email": "Email",
+    "id": "ID",
+    "empty": "No users found",
+    "previous": "Previous",
+    "next": "Next",
+    "backHome": "Back to home"
+  }
+}

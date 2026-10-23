@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 /**
  * MSW marks `msw/browser` as `"node": null` and `msw/node` as `"browser": null`.
@@ -42,4 +43,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);
